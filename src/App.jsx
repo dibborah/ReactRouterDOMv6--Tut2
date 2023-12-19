@@ -11,12 +11,15 @@ import {
 import { Home, About, Contact, Posts, Error, PostDetail, Login } from "./Pages";
 import RootLayout from "./layouts/RootLayout";
 import RequireAuth from "./components/RequireAuth";
-import AuthProvider from "./context/AuthProvider";
 import { Loader as fetchPosts } from "./Pages/Posts";
 import { Loader as fetchSinglePost } from "./Pages/PostDetail";
+import { useAuth } from "./context/AuthProvider";
 
 // step 2:
 // create router
+
+const App = () => {
+  const {isLoggedIn} = useAuth();
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />} errorElement={<h1>Something went wrong Bilal!!!</h1>}>
@@ -25,35 +28,32 @@ const router = createBrowserRouter(
       <Route path="about" element={<About />} />
       <Route path="contact" element={<Contact />} />
       <Route
-        loader={fetchPosts}
+        loader={(args)=>{
+          return fetchPosts(args,{isLoggedIn:isLoggedIn})}
+        }
         errorElement={<Error/>}
         path="posts"
         element={
-          <RequireAuth>
             <Posts />
-          </RequireAuth>
         }
       />
       <Route path="login" element={<Login />} />
       <Route
-        loader={fetchSinglePost}
+        loader={(args)=>{
+          return fetchSinglePost(args,{isLoggedIn:isLoggedIn})}
+        }
+        errorElement={<Error/>}
         path="posts/:id"
         element={
-          <RequireAuth>
             <PostDetail />
-          </RequireAuth>
         }
       />
       <Route path="*" element={<Error />} />
     </Route>
   )
 );
-
-const App = () => {
   return (
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
+    <RouterProvider router={router} />
   );
 };
 

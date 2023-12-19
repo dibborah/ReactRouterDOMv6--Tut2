@@ -4,7 +4,9 @@ const Error = () => {
   const error = useRouteError();
   console.dir(error);
   return (
-    <h1>{error.message}</h1>
+    <h1>
+      {error.message}
+    </h1>
   )
 }
 
