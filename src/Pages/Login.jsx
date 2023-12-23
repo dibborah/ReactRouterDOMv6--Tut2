@@ -5,6 +5,9 @@ const Login = () => {
   const {isLoggedIn, setIsLoggedIn} = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const url = location.search;
+  const searchParams = new URLSearchParams(url);
+  console.log(searchParams.get("redirectTo"));
   const previousPath = location.state?.previousPath || "/";
   const login = () => {
     setIsLoggedIn(true);

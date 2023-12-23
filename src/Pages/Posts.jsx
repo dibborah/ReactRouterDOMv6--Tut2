@@ -16,20 +16,27 @@ import { redirect, useLoaderData } from "react-router-dom";
 // 1.provide loader function to route
 // 2.useLoaderData function and get Data
 
-export const Loader = async (args,{isLoggedIn}) => { // Loader is responsible for fetching data
+export const Loader = async ({request},{isLoggedIn}) => { // Loader is responsible for fetching data
   // Since this loader function fetches the data before the component is rendered
   // So we have to stop the fetching here
 
   // We have to check the loggedIn status here
   // If not loggedIn than redirect to the loggedIn page
   // And fetch only if LoggedIn
-  const url = "https://jsonplaceholder.typicode.com/posts";
-  // console.log("args", args);
-  console.log("isLoggedIn", isLoggedIn);
+  const url = new URL(request.url);// Iska  ek js object bana dya jese url ko js treat karti hain
+  const pathname = url.pathname;
+  console.log(pathname);
+  const endpoint = "https://jsonplaceholder.typicode.com/posts";
+  // console.log("request", request.url);
+  
+  // url ka ek object bana lete hain
+  // Jese Js url ko deal karti hain wese hum ek url bana lete hain
+  
+  // console.log("isLoggedIn", isLoggedIn);
   if (!isLoggedIn) {
-    return redirect("/login");
+    return redirect(`/login?redirectTo=${pathname}`);// a & b are search parameters which can also be called as query parameters
   }
-  const response = await fetch(url);
+  const response = await fetch(endpoint);
   if (!response.ok){
     throw new Error("Something went wrong Rupesh!!!");
   }
