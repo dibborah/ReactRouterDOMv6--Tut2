@@ -25,7 +25,7 @@ export const Loader = async ({request},{isLoggedIn}) => { // Loader is responsib
   // And fetch only if LoggedIn
   const url = new URL(request.url);// Iska  ek js object bana dya jese url ko js treat karti hain
   const pathname = url.pathname;
-  console.log(pathname);
+  // console.log(pathname);
   const endpoint = "https://jsonplaceholder.typicode.com/posts";
   // console.log("request", request.url);
   
@@ -34,7 +34,8 @@ export const Loader = async ({request},{isLoggedIn}) => { // Loader is responsib
   
   // console.log("isLoggedIn", isLoggedIn);
   if (!isLoggedIn) {
-    return redirect(`/login?redirectTo=${pathname}`);// a & b are search parameters which can also be called as query parameters
+    // return redirect(`/login?a=hello&b=world`);// a & b are search parameters which can also be called as query parameters
+    return redirect(`/login?redirectTo=${pathname}`);
   }
   const response = await fetch(endpoint);
   if (!response.ok){

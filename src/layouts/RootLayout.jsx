@@ -9,6 +9,13 @@ const RootLayout = () => {
       <h1>Nav</h1>
       <nav>
         <ul>
+          {/* <li>
+            <NavLink 
+            to={"/login"}
+            >
+              Login
+            </NavLink>
+          </li> */}
           <li>
             <NavLink
               to={"/"}
